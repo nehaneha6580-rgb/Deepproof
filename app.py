@@ -101,8 +101,24 @@ with tab1:
         # RISK CALCULATION
         # -------------------------
         risk = 0
-        risk += int(sha256[:2], 16) % 10
-        factors = []
+factors = []
+
+# Content-based signals
+if term_hits > 0:
+    risk += min(term_hits * 12, 40)
+    factors.append(f"{term_hits} suspicious content/filename signal(s) detected.")
+
+if size_bytes == 0:
+    risk += 30
+    factors.append("File is empty.")
+elif size_mb < 0.01:
+    risk += 15
+    factors.append("Very small file size.")
+elif size_mb > 10:
+    risk += 5
+    factors.append("Large file requires additional technical review.")
+    
+        
 
         # File type
         if extension in ["jpg", "jpeg", "png"]:
