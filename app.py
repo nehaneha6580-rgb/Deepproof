@@ -101,6 +101,7 @@ with tab1:
         # RISK CALCULATION
         # -------------------------
         risk = 0
+        risk += int(sha256[:2], 16) % 10
         factors = []
 
         # File type
